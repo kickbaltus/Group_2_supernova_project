@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import fits
 from scipy import ndimage
+from matplotlib.colors import LinearSegmentedColormap
 
 # ==========================================================
 # PADEN
@@ -50,8 +51,8 @@ for name, img in [("Ha", ha), ("OIII", oiii), ("SII", sii)]:
 # CROP CRAB NEBULA
 # ==========================================================
 
-xmin = 1800
-xmax = 2800
+xmin = 1875
+xmax = 2775
 
 ymin = 2100
 ymax = 3000
@@ -205,11 +206,21 @@ fits.writeto(
 # HEATMAP FUNCTIE
 # ==========================================================
 
-def show_and_save(data, title, filename):
+def show_and_save(
+    data,
+    title,
+    filename,
+    cmap,
+    top_label,
+    top_color,
+    bottom_label,
+    bottom_color,
+    cbar_label
+):
 
-    cmap = plt.cm.RdBu_r.copy()
+    cmap = cmap.copy()
 
-    # NaN pixels worden zwart
+    # achtergrond zwart
     cmap.set_bad("black")
 
     plt.figure(figsize=(10,10))
@@ -222,8 +233,40 @@ def show_and_save(data, title, filename):
         vmax=1
     )
 
-    plt.colorbar(label="log10(ratio)")
+    cbar = plt.colorbar(
+    label=cbar_label,
+    shrink=0.72
+)
+
+    # tekst naast de colorbar
+    cbar.ax.text(
+        2.7,
+        1.0,
+        top_label,
+        color=top_color,
+        fontsize=11,
+        ha="left",
+        va="center",
+        transform=cbar.ax.transAxes
+    )
+
+    
+
+    cbar.ax.text(
+        2.7,
+        0.0,
+        bottom_label,
+        color=bottom_color,
+        fontsize=11,
+        ha="left",
+        va="center",
+        transform=cbar.ax.transAxes
+    )
+
     plt.title(title)
+
+    plt.xlabel("X-axis pixel number (-)")
+    plt.ylabel("Y-axis pixel number (-)")
 
     plt.tight_layout()
 
@@ -238,6 +281,37 @@ def show_and_save(data, title, filename):
     plt.close()
 
 # ==========================================================
+# SHO COLORMAPS
+# ==========================================================
+
+cmap_oiii_ha = LinearSegmentedColormap.from_list(
+    "OIII_Ha",
+    [
+        "#00aa00",   # Ha dominant = groen
+        "#ffffff",
+        "#0066ff"    # OIII dominant = blauw
+    ]
+)
+
+cmap_sii_ha = LinearSegmentedColormap.from_list(
+    "SII_Ha",
+    [
+        "#00aa00",   # Ha dominant = groen
+        "#ffffff",
+        "#cc0000"    # SII dominant = rood
+    ]
+)
+
+cmap_oiii_sii = LinearSegmentedColormap.from_list(
+    "OIII_SII",
+    [
+        "#cc0000",   # SII dominant = rood
+        "#ffffff",
+        "#0066ff"    # OIII dominant = blauw
+    ]
+)
+
+# ==========================================================
 # HEATMAPS
 # ==========================================================
 
@@ -245,20 +319,38 @@ print("\nHeatmaps maken...")
 
 show_and_save(
     log_oiii_ha,
-    "log10(OIII / Ha)",
-    "OIII_Ha_heatmap.png"
+    "Distribution (OIII / Ha)",
+    "OIII_Ha_heatmap.png",
+    cmap_oiii_ha,
+    top_label=" OIII\n dominant",
+    top_color="blue",
+    bottom_label=" Ha\n dominant",
+    bottom_color="green",
+    cbar_label="Ratio OIII / Ha (-)\nlog$_{10}$ scale"
 )
 
 show_and_save(
     log_sii_ha,
-    "log10(SII / Ha)",
-    "SII_Ha_heatmap.png"
+    "Distribution (SII / Ha)",
+    "SII_Ha_heatmap.png",
+    cmap_sii_ha,
+    top_label=" SII\n dominant",
+    top_color="red",
+    bottom_label=" Ha\n dominant",
+    bottom_color="green",
+    cbar_label="Ratio SII / Ha (-)\nlog$_{10}$ scale"
 )
 
 show_and_save(
     log_oiii_sii,
-    "log10(OIII / SII)",
-    "OIII_SII_heatmap.png"
+    "Distribution (OIII / SII)",
+    "OIII_SII_heatmap.png",
+    cmap_oiii_sii,
+    top_label=" OIII\n dominant",
+    top_color="blue",
+    bottom_label=" SII\n dominant",
+    bottom_color="red",
+    cbar_label="Ratio OIII / SII (-)\nlog$_{10}$ scale"
 )
 
 print("\nHeatmaps opgeslagen.")
