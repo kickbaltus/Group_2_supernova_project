@@ -285,7 +285,7 @@ def show_and_save(
 # ==========================================================
 
 cmap_oiii_ha = LinearSegmentedColormap.from_list(
-    "OIII_Ha",
+    "OIII_Hα",
     [
         "#00aa00",   # Ha dominant = groen
         "#ffffff",
@@ -294,7 +294,7 @@ cmap_oiii_ha = LinearSegmentedColormap.from_list(
 )
 
 cmap_sii_ha = LinearSegmentedColormap.from_list(
-    "SII_Ha",
+    "SII_Hα",
     [
         "#00aa00",   # Ha dominant = groen
         "#ffffff",
@@ -319,26 +319,26 @@ print("\nHeatmaps maken...")
 
 show_and_save(
     log_oiii_ha,
-    "Distribution (OIII / Ha)",
+    "Distribution (OIII / Hα)",
     "OIII_Ha_heatmap.png",
     cmap_oiii_ha,
     top_label=" OIII\n dominant",
     top_color="blue",
-    bottom_label=" Ha\n dominant",
+    bottom_label=" Hα\n dominant",
     bottom_color="green",
-    cbar_label="Ratio OIII / Ha (-)\nlog$_{10}$ scale"
+    cbar_label="Ratio OIII / Hα (-)\nlog$_{10}$ scale"
 )
 
 show_and_save(
     log_sii_ha,
-    "Distribution (SII / Ha)",
+    "Distribution (SII / Hα)",
     "SII_Ha_heatmap.png",
     cmap_sii_ha,
     top_label=" SII\n dominant",
     top_color="red",
-    bottom_label=" Ha\n dominant",
+    bottom_label=" Hα\n dominant",
     bottom_color="green",
-    cbar_label="Ratio SII / Ha (-)\nlog$_{10}$ scale"
+    cbar_label="Ratio SII / Hα (-)\nlog$_{10}$ scale"
 )
 
 show_and_save(
