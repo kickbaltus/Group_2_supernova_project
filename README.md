@@ -1,3 +1,5 @@
+Het bijhouden van het logboek en de meeting is gedaan in OneNote, hiervoor is Joshua uitgenodigd. 
+
 In dit project zitten 2 verschillende mappen: Resultaten en Python.
 In de map 'Resultaten' zitten de gebruikte .png afbeeldingen die gebruikt zijn voor het maken van het poster. 
 Deze afbeeldingen bevatten de 3 heatmaps met ratio's, de 3 losse filterafbeeldingen in RGB-kleuren, en tot slot de gestackte afbeelding van de filters.
