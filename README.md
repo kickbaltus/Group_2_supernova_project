@@ -1,182 +1,50 @@
-# Supernova_project
-Crab nebula
-
-# 📦 Supernova Project – Setup Handleiding (Beginner Friendly)
-
-Deze handleiding helpt je stap voor stap om het project werkend te krijgen, ook als je nog nooit met Git of Python hebt gewerkt.
-
----
-
-# 🌐 1. Repository downloaden (GitHub)
-
-Klik op deze link om de repository te klonen:
-
-👉 **REPO URL:**
-
-```
-https://github.com/kickbaltus/Supernova_project.git
-```
-
-Open een terminal (PowerShell of VS Code terminal) en voer uit:
-
-```bash
-git clone https://github.com/kickbaltus/Supernova_project.git
-cd Supernova_project
-```
-
----
-
-# 🐍 2. Controleren of Python is geïnstalleerd
-
-Voer dit uit in de terminal:
-
-```bash
-python --version
-```
-
-### ✔ Goed voorbeeld:
-
-```
-Python 3.10+ / 3.11+ / 3.14
-```
-
-### ❌ Als het niet werkt:
-
-* Installeer Python via: https://www.python.org/downloads/
-* Zorg dat je tijdens installatie **“Add Python to PATH” aanvinkt**
-
----
-
-# 📁 3. Virtual Environment aanmaken
-
-Maak een eigen omgeving (belangrijk voor dependencies):
-
-```bash
-python -m venv .venv
-```
-
----
-
-# ⚡ 4. Environment activeren
-
-## Windows (PowerShell)
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-## Windows (als dat niet werkt)
-
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-Probeer daarna opnieuw activeren.
-
----
-
-## ✔ Als het werkt zie je dit:
-
-```
-(.venv) PS C:\...
-```
-
----
-
-# 📦 5. Installeren van benodigde packages
-
-Installeer alle libraries:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-# 🚀 6. Werken in het project (dagelijkse workflow)
-
-## 📥 Eerst altijd updates ophalen:
-
-```bash
-git pull
-```
-
-## ✏️ Code aanpassen
-
-Werk in de Python bestanden in de map `Python/`.
-
-## 📤 Wijzigingen opslaan naar GitHub:
-
-```bash
-git add .
-git commit -m "Beschrijf wat je hebt gedaan"
-git push
-```
-
----
-
-# 🧪 7. Nieuwe packages installeren
-
-Als je extra libraries nodig hebt:
-
-```bash
-pip install <package>
-```
-
-Daarna altijd:
-
-```bash
-pip freeze > requirements.txt
-git add requirements.txt
-git commit -m "Update requirements"
-git push
-```
-
----
-
-# ⚠️ 8. Belangrijke regels
-
-* ❌ NOOIT `.venv` uploaden (staat al goed ingesteld via `.gitignore`)
-* ✔ Altijd eerst `git pull` vóór je begint
-* ✔ Gebruik altijd dezelfde repository
-* ✔ Werk in je eigen `.venv` (iedereen heeft zijn eigen)
-
----
-
-# 🧠 9. Hoe samenwerken werkt (simpel uitgelegd)
-
-Iedereen:
-
-* gebruikt dezelfde GitHub code
-* heeft zijn eigen Python omgeving (.venv)
-* werkt lokaal op zijn eigen laptop
-* deelt code via GitHub (push/pull)
-
-👉 Git zorgt ervoor dat jullie code samenkomt zonder elkaar te overschrijven.
-
----
-
-# 🔁 10. Samenvatting (belangrijkste workflow)
-
-```bash
-git pull
-# werken aan code
-git add .
-git commit -m "update"
-git push
-```
-
----
-
-# 💡 Tip
-
-Als je ergens vastloopt:
-
-* vraag eerst ChatGPT
-* of check Python versie + venv activatie
-
-Dit zijn de 2 meest voorkomende problemen.
-
----
-
-Einde setup 🎉
+In dit project zitten 2 verschillende mappen: Resultaten en Python.
+In de map 'Resultaten' zitten de gebruikte .png afbeeldingen die gebruikt zijn voor het maken van het poster. 
+Deze afbeeldingen bevatten de 3 heatmaps met ratio's, de 3 losse filterafbeeldingen in RGB-kleuren, en tot slot de gestackte afbeelding van de filters.
+
+In de map 'Python' zitten de verschillende gebruikte pythonscripts die gebruikt zijn voor de datareducie en analyse. Er wordt nu per script een uitleg gegeven wat het doet. Hiermee kan je begrijpen hoe de afbeeldingen tot stand zijn gekomen. 
+
+          Alignment.py:
+          Dit script lijnt de drie gestackte masterafbeeldingen van Hα, OIII en SII op elkaar uit. Vervolgens worden de gealigneerde FITS-bestanden opgeslagen en worden controleafbeeldingen gemaakt om de kwaliteit van de uitlijning te controleren.
+          
+          Calibrated_light_frames.py:
+          Dit script kalibreert de dark-gecorrigeerde light frames met behulp van een master flat frame. Hierdoor worden verschillen in gevoeligheid van de detector en optische effecten gecorrigeerd, waarna de gekalibreerde afbeeldingen als nieuwe FITS-bestanden worden opgeslagen.
+          
+          Corrected_flat_frames.py:
+          Dit script corrigeert de ruwe flat frames door het master dark frame van de bijbehorende belichtingstijd af te trekken. Hierdoor wordt thermische ruis uit de flatbeelden verwijderd en ontstaan dark-gecorrigeerde flat frames die gebruikt kunnen worden voor het maken van een master flat frame.
+          
+          Corrected_light_frames.py:
+          Dit script corrigeert de ruwe light frames door het master dark frame van iedere opname af te trekken. Hierdoor wordt thermische ruis verwijderd en ontstaan dark-gecorrigeerde beelden die gebruikt kunnen worden voor de verdere kalibratie met een master flat frame.
+          
+          Histogram.ipynb:
+          script voor korte visualisatie, maar niet gebruikt
+          
+          image_stacking_Ha.py:
+          Dit script lijnt alle gekalibreerde Hα-opnamen uit en combineert deze tot één master stack. Hierdoor wordt de signaal-ruisverhouding verbeterd en ontstaat een representatieve Hα-afbeelding.
+          
+          image_stacking_o3.py:
+          Dit script stapelt alle OIII-opnamen tot één master OIII-afbeelding. De afzonderlijke beelden worden eerst uitgelijnd en vervolgens gemiddeld.
+          
+          image_stacking_S2.py:
+          Dit script maakt een master stack van alle SII-opnamen. Door meerdere beelden te combineren wordt het signaal versterkt en de ruis verminderd.
+          
+          imagestack_all.py:
+          script uiteindeljk niet gebruikt voor resultaten..
+          
+          Master_frame_dark.py:
+          Dit script combineert alle dark frames tot één master dark frame. Dit master dark frame wordt gebruikt om thermische ruis uit de light frames te verwijderen.
+          
+          Master_frame_flat.py:
+          Dit script combineert alle flat frames tot één master flat frame. Dit master flat frame corrigeert verschillen in gevoeligheid van de sensor en optische effecten zoals vignettering.
+          
+          Master_frame_inspector.py:
+          Dit script wordt gebruikt om master frames visueel te controleren. Hiermee kunnen eventuele afwijkingen of artefacten in de masterbeelden worden opgespoord.
+          
+          Ratio_heatmap.py:
+          Dit script berekent de verhouding tussen de verschillende emissielijnen (OIII, Hα en SII) per pixel. De resultaten worden weergegeven als heatmaps, waarmee de ruimtelijke verdeling van de verschillende stoffen in de Crabnevel zichtbaar wordt gemaakt.
+          
+          SHO_images.py:
+          Dit script maakt distributieafbeeldingen van Hα, OIII en SII en combineert deze tot een SHO-kleurenafbeelding. Alle afbeeldingen hebben dezelfde uitsnede en schaal, zodat ze direct met de ratio-heatmaps kunnen worden vergeleken.
+
+Dit was de uitleg van de verschillende afbeeldigen en pythoncodes
+          
